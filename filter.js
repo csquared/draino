@@ -5,6 +5,7 @@ function Filter(name, stdout){
   logfmt.log({at: 'new-filter', name: name});
   this.name = name;
   this.stdout = stdout || process.stdout;
+  this.backoff = 500;
 
   this.spawn = function(){
     logfmt.log({at: 'spawn', name: this.name});
@@ -17,7 +18,8 @@ function Filter(name, stdout){
       var respawn = function(){
         self.spawn(self.name, self.stdout)
       }
-      setTimeout(respawn, 500);
+      setTimeout(respawn, this.backoff);
+      this.backoff = this.backoff * this.backoff;
     })
     return this;
   }
