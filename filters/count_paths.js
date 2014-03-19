@@ -38,8 +38,9 @@ process.stdin.pipe(split()).on('data', function(data){
     urls.forEach(function(urlData){
       var path = urlData.path
       if(h.match(path, data.path)){
-        client.incr(data.method + ':' + path)
-        client.incr(data.method + ':' + path + ':' + data.status + ':count')
+        var key = urlData.app + ':' + data.method + ':' + path
+        client.incr(key)
+        client.incr(key + ':' + data.status + ':count')
       }
     })
   }
