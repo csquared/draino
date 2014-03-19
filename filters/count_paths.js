@@ -11,9 +11,9 @@ var h = require('../match');
 if (process.env.REDIS_PROVIDER) {
   // inside if statement
   var rtg   = require("url").parse(process.env[process.env.REDIS_PROVIDER]);
-  var redis = require("redis").createClient(rtg.port, rtg.hostname);
+  var client = require("redis").createClient(rtg.port, rtg.hostname);
 
-  redis.auth(rtg.auth.split(":")[1]);
+  client.auth(rtg.auth.split(":")[1]);
 } else {
    var client = redis.createClient();
 }
