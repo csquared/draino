@@ -16,5 +16,8 @@
     "request": "~2.34.0",
     "redis": "~0.10.1",
     "restify": "~2.6.3"
+  },
+  "devDependencies": {
+    "mocha": "~1.18.2"
   }
 }

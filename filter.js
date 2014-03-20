@@ -7,6 +7,10 @@ function Filter(name, stdout){
   this.stdout = stdout || process.stdout;
   this.backoff = 500;
 
+  this.write = function(data){
+    this.child.stdin.write(data);
+  }
+
   this.spawn = function(){
     logfmt.log({at: 'spawn', name: this.name});
     this.child = spawn(this.name);

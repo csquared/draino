@@ -1,6 +1,6 @@
 var restify = require('restify');
 var through = require('through');
-var logfmt  = require('logfmt').namespace({module: 'hstorm'});
+var logfmt  = require('logfmt').namespace({module: 'draino'});
 var fs      = require('fs');
 var Filter  = require('./filter');
 var argv    = require('optimist').argv;
@@ -26,7 +26,7 @@ server.post('/logs', function(req, res, next){
   req.pipe(logfmt.streamParser()).pipe(through(function(line){
     var data = JSON.stringify(line) + "\n";
     for(var i in filters){
-      filters[i].child.stdin.write(data);
+      filters[i].write(data);
     }
   }))
   res.send(201, 'OK');

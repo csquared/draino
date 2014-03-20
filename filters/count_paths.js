@@ -31,6 +31,8 @@ urlData.forEach(function(line){
 
 console.log("listening on stdin");
 
+var d = ':';
+
 process.stdin.pipe(split()).on('data', function(data){
   var data = JSON.parse(data);
 
@@ -38,9 +40,9 @@ process.stdin.pipe(split()).on('data', function(data){
     urls.forEach(function(urlData){
       var path = urlData.path
       if(h.match(path, data.path)){
-        var key = urlData.app + ':' + data.method + ':' + path
-        client.incr(key)
-        client.incr(key + ':' + data.status + ':count')
+        var key = urlData.app + d + data.method
+        client.incr(key + d + path)
+        client.incr(key + d + data.status + d + path)
       }
     })
   }
