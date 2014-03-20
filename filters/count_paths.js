@@ -41,20 +41,18 @@ process.stdin.pipe(split()).on('data', function(data){
 
   if(data.dyno && data.dyno.split('.')[0] == 'web'){
     var now = new Date();
+    /*
     var timeKey = [now.getUTCFullYear(),
                    now.getUTCMonth() + 1,
                    now.getUTCDate()].join('-');
 
     var timeHourKey = timeKey + '-' + now.getUTCHours();
+    */
 
     urls.forEach(function(urlData){
       var path = urlData.path
       if(h.match(path, data.path)){
-        var key = d(timeKey, urlData.app, data.method)
-        client.incr(d('hits', key, path))
-        client.incr(d('status', key, data.status, path))
-
-        var key = d(timeHourKey, urlData.app, data.method)
+        var key = d(urlData.app, data.method)
         client.incr(d('hits', key, path))
         client.incr(d('status', key, data.status, path))
       }
