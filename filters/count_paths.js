@@ -31,18 +31,33 @@ urlData.forEach(function(line){
 
 console.log("listening on stdin");
 
-var d = ':';
+var d = function(){
+  var args = Array.prototype.slice.call(arguments);
+  return args.join(':')
+}
 
 process.stdin.pipe(split()).on('data', function(data){
   var data = JSON.parse(data);
 
   if(data.dyno && data.dyno.split('.')[0] == 'web'){
+    var now = new Date();
+    var timeKey = [now.getUTCFullYear(),
+                   now.getUTCMonth() + 1,
+                   now.getUTCDate()].join('-');
+
+    var timeHourKey = timeKey + '-' + now.getUTCHours();
+
     urls.forEach(function(urlData){
       var path = urlData.path
       if(h.match(path, data.path)){
-        var key = urlData.app + d + data.method
-        client.incr(key + d + path)
-        client.incr(key + d + data.status + d + path)
+        var key = d(timeKey, urlData.app, data.method)
+      console.log(d(key, path))
+        client.incr(d('hits', key, path))
+        client.incr(d('status', key, data.status, path))
+
+        var key = d(timeHourKey, urlData.app, data.method)
+        client.incr(d('hits', key, path))
+        client.incr(d('status', key, data.status, path))
       }
     })
   }
