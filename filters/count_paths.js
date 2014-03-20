@@ -51,7 +51,6 @@ process.stdin.pipe(split()).on('data', function(data){
       var path = urlData.path
       if(h.match(path, data.path)){
         var key = d(timeKey, urlData.app, data.method)
-      console.log(d(key, path))
         client.incr(d('hits', key, path))
         client.incr(d('status', key, data.status, path))
 
