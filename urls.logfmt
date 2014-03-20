@@ -10,7 +10,6 @@ verb=PUT path="/products/:name/usage/:heroku_id/events/:event/open/:start_time" 
 verb=PUT path="/products/:name/usage/:heroku_id/events/:event/close/:stop_time" source=local app=vault-usage
 verb=PUT path="/users/:user_id/apps/:app_id/open/:event_id/:start_time" source=local app=vault-usage
 verb=PUT path="/users/:user_id/apps/:app_id/close/:event_id/:stop_time" source=local app=vault-usage
-
 verb=HEAD path=/ app=vault source=local
 verb=GET path=/? app=vault source=local
 verb=HEAD path=/? app=vault source=local
