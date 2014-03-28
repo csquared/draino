@@ -8,23 +8,24 @@ architecture:
 
 <pre>
   +------+                            +-------------------+                +-------+
-  | App  |   +------+       HTTP(S)   |                   |       STDIN    |       |
+  | App  |   +------+       HTTP(S)   |                   |     STDIN      |       |
   +------+   | App  |    +-----------&gt;|      Draino       |+--------------&gt;|Filter |
-   +         +------+    |            |                   |                |       |
-   |STDOUT     +         |            +-------------------+                +-------+
-   |           |STDOUT   |                          +
-   v           v         |                          |
- +---------------+       |                          |        +-------+
- |               |       |                          | STDIN  |       |
- | h drains:add  |+------+                          +-------&gt;|Filter |
- |               |                                           |       |
- +---------------+                                           +-------+
-      ^        ^
+   +         +------+    |            |                   |&lt;--------------+|       |
+   |STDOUT     +         |            +-------------------+     STDOUT     +-------+
+   |           |STDOUT   |                  ++        ^  +
+   v           v         |                  ||        |  |
+ +---------------+       |                  ||        |  |
+ |               |       |                  ||        |  | STDIN  +-------+
+ | h drains:add  |+------+                  ||        |  +-------&gt;|       |
+ |               |                          vv        |           |Filter |
+ +---------------+                        STDOUT      +----------+|       |
+      ^        ^                                           STDOUT +-------+
       |STDOUT  |
       +        |
      +------+  | STDOUT   +------+
      | App  |  +--------+ | App  |
      +------+             +------+</pre>
+
 
 All you have to do is write the filters, which are any UNIX program that can parse JSON.
 
