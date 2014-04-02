@@ -18,6 +18,8 @@ process.stdin
     if(data.R14){
       logfmt.log({r14: 'detected'});
 
+      console.log(data);
+
       for(var key in data){
         if(/^heroku\[/.test(key)){
           var proc = key.replace(/^heroku\[/,'').replace(/]:$/,'')
