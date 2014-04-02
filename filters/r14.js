@@ -18,10 +18,8 @@ process.stdin
     if(data.R14){
       logfmt.log({r14: 'detected'});
 
-      console.log(data);
-
       for(var key in data){
-        if(/^heroku\[/.test(key)){
+        if(/^heroku\[/.test(key) || /statement_builder/.test(key)){
           var proc = key.replace(/^heroku\[/,'').replace(/]:$/,'')
           var timer = logfmt.time().namespace({restart: proc});
           timer.log({r14: 'request-restart'});
