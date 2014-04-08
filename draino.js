@@ -1,7 +1,9 @@
 var restify = require('restify');
 var through = require('through');
 var logfmt  = require('logfmt').namespace({module: 'draino'});
+var syslogfmt = require('syslogfmt')
 var fs      = require('fs');
+
 var Filter  = require('./filter');
 var argv    = require('optimist').argv;
 
@@ -23,12 +25,16 @@ var server = restify.createServer({
 server.use(logfmt.requestLogger());
 
 server.post('/logs', function(req, res, next){
-  req.pipe(logfmt.streamParser()).pipe(through(function(line){
+  var sendDataToFilters = through(function(line){
     var data = JSON.stringify(line) + "\n";
     for(var i in filters){
       filters[i].write(data);
     }
-  }))
+  })
+
+  req.pipe(syslogfmt.stream())
+     .pipe(logfmt.streamParser())
+     .pipe(sendDataToFilters)
   res.send(201, 'OK');
   return next();
 })
