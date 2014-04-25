@@ -18,6 +18,7 @@
     "restify": "~2.6.3",
     "heroku-client": "~1.2.0"
   },
+  "bin": { "draino": "./draino.js" }
   "devDependencies": {
     "mocha": "~1.18.2"
   }
