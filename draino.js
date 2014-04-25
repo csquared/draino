@@ -24,9 +24,10 @@ var server = restify.createServer({
 
 server.use(logfmt.requestLogger());
 
-server.post('/logs', function(req, res, next){
+var filterLogs = function(req, res, next){
   var sendDataToFilters = through(function(line){
     var data = JSON.stringify(line) + "\n";
+    data.source = req.params.source || 'default'
     for(var i in filters){
       filters[i].write(data);
     }
@@ -37,7 +38,10 @@ server.post('/logs', function(req, res, next){
      .pipe(sendDataToFilters)
   res.send(201, 'OK');
   return next();
-})
+}
+
+server.post('/logs', filterLogs)
+server.post('/logs/:source', filterLogs)
 
 var port = process.env.PORT;
 server.listen(port);
