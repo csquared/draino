@@ -19,6 +19,7 @@
     "heroku-client": "~1.2.0",
     "syslogfmt": "0.0.0"
   },
+  "bin": { "draino": "./draino.js" }
   "devDependencies": {
     "mocha": "~1.18.2"
   }
