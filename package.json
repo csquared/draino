@@ -6,7 +6,10 @@
   "scripts": {
     "test": "mocha "
   },
-  "author": "",
+  "bin": {
+    "draino" : "./draino.js"
+  },
+  "author": "csquared",
   "license": "ISC",
   "dependencies": {
     "logfmt": "~1.1.2",

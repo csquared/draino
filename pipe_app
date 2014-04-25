@@ -1,3 +1,0 @@
-#! /usr/bin/env bash
-
-hk log -a $1 | ./strip_ts.js | logfmt | $2
