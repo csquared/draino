@@ -1,8 +1,8 @@
 {
   "name": "draino",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
-  "main": "hstorm.js",
+  "main": "draino.js",
   "scripts": {
     "test": "mocha "
   },
