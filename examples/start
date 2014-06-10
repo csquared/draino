@@ -1,0 +1,3 @@
+#! /usr/bin/env bash
+
+PORT=5000 ./bin/draino -f examples/echo.js  -s SECRET
