@@ -40,6 +40,16 @@ var filterLogs = function(req, res, next){
   return next();
 }
 
+if(argv.s){
+  server.use(function(req, res, next){
+    if(req.params.source != argv.s){
+      res.send(403, 'Request unauthorized')
+    }else{
+      next();
+    }
+  })
+}
+
 server.post('/logs', filterLogs)
 server.post('/logs/:source', filterLogs)
 
