@@ -31,3 +31,26 @@ All you have to do is write the filters, which are any UNIX program that can par
 
 Draino spawns everything in the ./filters directory and pipes log data into STDIN as one
 JSON object per line.
+
+## Modes
+
+
+## usage
+
+    npm install draino
+
+### `-f` single filter
+
+    draino -f path/to/filter
+
+### `-d` directory of filters
+
+    draino -f path/to/filter
+
+### `--heroku` normalize logplex metadata to logfmt
+
+    draino -f path/to/filter --heroku
+
+### `--logfmt` parse logfmt logs and emit JSON
+
+    draino -f path/to/filter --heroku --logfmt
