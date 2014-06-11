@@ -33,9 +33,11 @@ var filterLogs = function(req, res, next){
     }
   })
 
-  req.pipe(normalizer.stream())
-     .pipe(logfmt.streamParser())
-     .pipe(sendDataToFilters)
+  var pipeline = req;
+  if(argv.heroku) {
+    pipeline.pipe(normalizer.stream()).pipe(logfmt.streamParser())
+  }
+  pipeline.pipe(sendDataToFilters)
   res.send(201, 'OK');
   return next();
 }
@@ -55,4 +57,8 @@ server.post('/logs/:source', filterLogs)
 
 var port = process.env.PORT;
 server.listen(port);
-logfmt.log({server: 'listen', port: port});
+var instanceData = {port: port};
+instanceData.mode = argv.heroku ? 'heroku' : 'raw'
+var logger = logfmt.namespace(instanceData);
+logger.log({server: 'listen'});
+
