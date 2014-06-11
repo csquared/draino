@@ -1,7 +1,7 @@
 var restify = require('restify');
 var through = require('through');
 var logfmt  = require('logfmt').namespace({module: 'draino'});
-var syslogfmt = require('syslogfmt')
+var normalizer = require('logplex-normalizer')
 var fs      = require('fs');
 
 var Filter  = require('./filter');
@@ -33,7 +33,7 @@ var filterLogs = function(req, res, next){
     }
   })
 
-  req.pipe(syslogfmt.stream())
+  req.pipe(normalizer.stream())
      .pipe(logfmt.streamParser())
      .pipe(sendDataToFilters)
   res.send(201, 'OK');
